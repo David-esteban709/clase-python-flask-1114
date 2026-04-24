@@ -124,25 +124,6 @@ Indica que archivos no se deben versionar.
 
 Incluye una consigna inicial de trabajo.
 
-## Ideas de trabajo
-
-### Cambios sugeridos
-
-1. Cambiar el titulo que aparece en el navegador.
-2. Cambiar el mensaje principal de la pagina.
-3. Agregar un segundo parrafo contando de que se trata la app.
-4. Cambiar el texto del pie de pagina.
-5. Probar que pasa si se guarda un cambio en HTML y se recarga el navegador.
-
-### Preguntas guia
-
-1. Que archivo ejecutamos para levantar el servidor?
-2. Para que sirve `.venv`?
-3. Que guarda `requirements.txt`?
-4. Que archivo contiene el HTML que vemos en pantalla?
-5. Que parte del codigo arranca el servidor?
-6. Que significa la ruta `/` en este ejemplo minimo?
-
 ## Objetivo
 
 Contar con una base ordenada para instalar dependencias, ejecutar Flask y ubicar rapidamente los archivos principales del proyecto.

@@ -6,67 +6,21 @@ Poner en marcha el proyecto en tu entorno local, entender para que sirve cada pi
 
 En esta primera clase no alcanza con "hacerlo andar". Tienes que empezar a distinguir que problema resuelve cada paso: aislamiento del entorno, instalacion de dependencias, arranque del servidor y renderizado de una plantilla HTML.
 
-## Requisitos previos
+## Preparacion
 
-- Tener Python 3 instalado y accesible desde terminal.
-- Estar parado en la carpeta raiz del proyecto.
-- Tener una terminal disponible para ejecutar comandos.
-- Tener un navegador para comprobar la respuesta del servidor.
+Para instalar dependencias y ejecutar el proyecto, sigue el `README.md`.
 
-## Pasos para ejecutar el proyecto
+## Consigna
 
-1. Crear el entorno virtual:
+1. Instala las dependencias y levanta la aplicacion siguiendo el `README.md`.
 
-   ```bash
-   python -m venv .venv
-   ```
+2. Abre la aplicacion en el navegador y comprueba que responde correctamente.
 
-   Este comando crea un entorno virtual dentro de la carpeta `.venv`. No es decoracion. Sirve para aislar las dependencias del proyecto y evitar mezclar paquetes de esta app con otros proyectos o con tu instalacion global de Python.
-
-2. Activar el entorno virtual:
-
-   ```bash
-   source .venv/bin/activate
-   ```
-
-   Al activarlo, la terminal empieza a usar el interprete y `pip` de ese entorno. Si no entendes esto desde el arranque, despues instalas cosas "porque si" y no sabes donde quedaron.
-
-3. Instalar las dependencias del proyecto:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-   `pip` instala los paquetes listados en `requirements.txt`. En este proyecto la dependencia principal es `Flask`, que es el framework que levanta el servidor web y conecta rutas con respuestas.
-
-4. Ejecutar la aplicacion:
-
-   ```bash
-   python app.py
-   ```
-
-   Este comando corre el archivo principal del proyecto. Ahi se crea la aplicacion Flask, se define la ruta `/` y se inicia el servidor de desarrollo con `debug=True`.
-
-5. Abrir la aplicacion en el navegador:
-
-   Ingresa a la direccion local que aparece en terminal, normalmente `http://127.0.0.1:5000`.
-
-   Si la pagina carga, significa que tu servidor esta escuchando solicitudes HTTP en tu maquina y que Flask encontro correctamente la plantilla HTML que debe renderizar.
-
-6. Modificar la vista base y verificar el cambio:
+3. Modifica la vista base y verifica el cambio:
 
    Edita `templates/index.html`, cambia al menos el `<title>` y el `<h1>`, guarda y recarga la pagina.
 
    Este paso existe para que veas la relacion concreta entre archivo fuente, servidor y resultado en navegador. Codigo que no observas, no lo entendes.
-
-## Que hace cada parte base del proyecto
-
-- `app.py`: punto de entrada. Crea la aplicacion, registra la ruta principal y arranca el servidor.
-- `app = Flask(__name__)`: instancia la aplicacion Flask. Todavia no hace falta dominar todos sus argumentos, pero si entender que este objeto centraliza configuracion, rutas y ejecucion.
-- `@app.route("/")`: define que funcion debe ejecutarse cuando alguien entra a la ruta raiz del sitio.
-- `render_template("index.html")`: le dice a Flask que busque ese archivo dentro de `templates/` y lo entregue como respuesta.
-- `templates/`: carpeta reservada por convencion para las plantillas HTML.
-- `requirements.txt`: lista de dependencias necesarias para reproducir el entorno del proyecto.
 
 ## Preguntas de reflexion tecnica
 
