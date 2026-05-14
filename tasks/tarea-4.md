@@ -1,100 +1,111 @@
 # Tarea 4 - Mostrar listas con Jinja en Flask
 
-## Objetivo
+## Objetivo tecnico
 
-Agregar una seccion de recursos al Mini Portal de Clase Flask y mostrar una lista de elementos usando Jinja.
-
-En las tareas anteriores ya trabajaste con una pagina inicial, datos simples y varias rutas. Ahora vas a dar otro paso importante: enviar una lista desde Python y recorrerla en una plantilla HTML.
+Agregar la pagina `/recursos` y mostrar una coleccion de datos con un bucle de Jinja.
+La meta es pasar de variables sueltas a renderizar listas completas.
 
 ## Preparacion
 
-Antes de empezar, asegurate de tener completada la tarea 3.
-
-El proyecto deberia tener al menos estas rutas funcionando:
+Antes de empezar, valida que la tarea 3 funciona:
 
 1. `/`
 2. `/acerca`
 3. `/contacto`
 
-Tambien deberias poder navegar entre esas paginas desde el navegador.
+Si alguna ruta falla, arreglala primero y luego continua.
 
-## Consigna
+## Guia paso a paso
 
-Crea una nueva seccion llamada Recursos.
+### Paso 1: Crear la ruta `/recursos`
 
-La tarea debe cumplir con estos puntos:
+En `app.py`, agrega una nueva funcion con su decorador.
 
-1. Crear una ruta `/recursos` en `app.py`.
-2. Crear una plantilla `templates/recursos.html`.
-3. Crear una lista en Python con al menos 4 recursos de clase.
-4. Enviar esa lista a la plantilla usando `render_template`.
-5. Recorrer la lista en `recursos.html` usando un bucle `{% for %}` de Jinja.
-6. Mostrar cada recurso dentro de una lista HTML (`<ul>` o `<ol>`).
-7. Agregar un enlace de navegacion hacia Recursos desde las demas paginas.
-8. Verificar el resultado final en el navegador.
+### Paso 2: Definir la lista en Python
 
-Los recursos pueden ser temas, enlaces, herramientas o materiales de clase. Por ejemplo:
-
-1. Entorno virtual
-2. Rutas en Flask
-3. Plantillas HTML
-4. Variables con Jinja
-
-## Foco tecnico
-
-Hasta ahora mostraste datos simples como textos individuales. Pero muchas aplicaciones web necesitan mostrar colecciones: productos, usuarios, tareas, mensajes, cursos o recursos.
-
-En Python, una lista puede verse asi:
+Dentro de esa funcion, crea una lista con minimo 4 elementos.
+Ejemplo:
 
 ```python
-recursos = ["Entorno virtual", "Rutas en Flask", "Plantillas HTML"]
+recursos = [
+    "Entorno virtual",
+    "Rutas en Flask",
+    "Plantillas HTML",
+    "Variables con Jinja"
+]
 ```
 
-Y en una plantilla Jinja se puede recorrer asi:
+### Paso 3: Enviar la lista a la plantilla
+
+Retorna `render_template` pasando la variable:
+
+```python
+return render_template("recursos.html", recursos=recursos)
+```
+
+### Paso 4: Crear `templates/recursos.html`
+
+Crea el archivo y agrega estructura HTML basica.
+Incluye un titulo como `<h1>Recursos de clase</h1>`.
+
+### Paso 5: Recorrer la lista con Jinja
+
+En `recursos.html`, usa un `<ul>` con bucle:
 
 ```html
-{% for recurso in recursos %}
-  <li>{{ recurso }}</li>
-{% endfor %}
+<ul>
+  {% for recurso in recursos %}
+    <li>{{ recurso }}</li>
+  {% endfor %}
+</ul>
 ```
 
-Ese recorrido significa:
+Ese bloque debe generar un `<li>` por cada elemento de la lista de Python.
 
-1. Flask prepara una lista en Python.
-2. Flask envia esa lista a la plantilla.
-3. Jinja repite una parte del HTML por cada elemento.
-4. El navegador recibe HTML final ya generado.
+### Paso 6: Integrar navegacion
 
-Ojo con esto: el navegador no entiende Jinja. Jinja se procesa antes, del lado de Flask. Lo que llega al navegador es HTML normal.
+Agrega enlace a `/recursos` desde `index.html`, `acerca.html` y `contacto.html`.
+Tambien incluye links de regreso desde `recursos.html` al resto de paginas.
+
+### Paso 7: Verificar en navegador
+
+1. Abre `http://127.0.0.1:5000/recursos`.
+2. Comprueba que se vean los 4 (o mas) elementos.
+3. Cambia un texto en la lista de `app.py`, guarda y recarga.
+4. Verifica que el cambio aparece en la pagina.
+
+## Checklist de validacion
+
+1. Existe la ruta `/recursos` en `app.py`.
+2. Existe `templates/recursos.html`.
+3. La lista tiene al menos 4 elementos en Python.
+4. El HTML usa `{% for %}` y `{{ recurso }}`.
+5. La pagina muestra la lista correctamente.
+6. Hay navegacion entre todas las paginas del mini portal.
+
+## Errores comunes (y como corregirlos)
+
+1. Error de sintaxis en Jinja: olvidar `%` o llaves.
+   Solucion: revisa el formato exacto de `{% for ... %}` y `{% endfor %}`.
+2. Nombre inconsistente: en Python `recursos`, en HTML `items`.
+   Solucion: usa el mismo nombre en ambos lados.
+3. Lista fuera de la funcion o mal indentada.
+   Solucion: verifica indentacion dentro de la funcion de la ruta.
+4. La pagina carga, pero no muestra elementos.
+   Solucion: confirma que la lista no este vacia y que el bucle este dentro del `<ul>`.
 
 ## Preguntas de reflexion tecnica
 
-1. Que diferencia hay entre mostrar una variable simple y recorrer una lista?
-2. Donde existe primero la lista: en Python, en Jinja o en el navegador?
-3. Que hace `{% for recurso in recursos %}`?
-4. Que muestra `{{ recurso }}` dentro del bucle?
-5. Que pasaria si la lista esta vacia?
-6. Por que este concepto sirve para mostrar productos, alumnos, tareas o mensajes en una aplicacion real?
+1. Que cambia entre renderizar una variable simple y renderizar una lista?
+2. Donde se ejecuta el bucle de Jinja: en el navegador o en Flask?
+3. Que ventaja aporta este patron para casos reales (productos, tareas, alumnos)?
 
 ## Entregable
 
-Para dar la tarea por completa, se debe entregar:
-
-1. `app.py` con la ruta `/recursos`.
-2. `templates/recursos.html` creado y funcionando.
-3. Una lista de al menos 4 recursos definida en Python.
-4. La lista renderizada en HTML usando `{% for %}`.
-5. Navegacion hacia la nueva pagina Recursos.
-6. Una explicacion corta del flujo: `lista en Python -> render_template -> bucle en Jinja -> HTML final`.
-
-## Tiempo estimado
-
-Esta tarea deberia tomar entre 60 y 90 minutos.
-
-Si ya entendiste bien las rutas de la tarea 3, probablemente la parte nueva sea solo el bucle. Si todavia te cuesta conectar rutas y plantillas, tomate mas tiempo. No corras. Primero entende el recorrido.
-
-## Cierre
-
-Esta tarea marca un salto importante: ya no estas mostrando una pagina fija ni datos sueltos. Estas empezando a renderizar colecciones.
-
-Muchas aplicaciones reales son, en el fondo, esto mismo: traer una lista de datos y mostrarla de forma clara en una pagina.
+1. `app.py` con ruta `/recursos` funcional.
+2. `templates/recursos.html` creado.
+3. Lista de minimo 4 recursos definida en Python.
+4. Lista mostrada con bucle `{% for %}` en HTML.
+5. Navegacion hacia y desde la pagina de recursos.
+6. Explicacion corta del flujo:
+   `lista en Python -> render_template -> bucle Jinja -> HTML final en navegador`.

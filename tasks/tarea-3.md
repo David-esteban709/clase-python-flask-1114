@@ -1,40 +1,25 @@
 # Tarea 3 - Crear varias rutas y varias paginas en Flask
 
-## Objetivo
+## Objetivo tecnico
 
-Convertir el proyecto en un Mini Portal de Clase Flask con mas de una pagina.
-
-Hasta ahora trabajaste con una sola ruta: `/`. En esta tarea vas a entender que una aplicacion Flask puede responder a distintas URL, y que cada URL puede ejecutar una funcion diferente y mostrar una plantilla diferente.
+Convertir la app en un mini portal con varias paginas conectadas entre si.
+En esta tarea debes entender el flujo completo: `URL -> funcion Python -> plantilla HTML`.
 
 ## Preparacion
 
-Antes de empezar, asegurate de que el proyecto corre correctamente con:
+1. Ejecuta la app con `python app.py`.
+2. Verifica que `http://127.0.0.1:5000/` responde correctamente.
+3. Ten abierto `app.py` y la carpeta `templates/`.
 
-```powershell
-python app.py
-```
+## Guia paso a paso
 
-Luego abri la aplicacion en el navegador y verifica que la ruta principal `/` funciona.
+### Paso 1: Mantener la ruta principal
 
-## Consigna
+No rompas la ruta `/` que ya existe. Debe seguir renderizando `index.html`.
 
-Agrega nuevas secciones al portal usando rutas y plantillas.
+### Paso 2: Crear la ruta `/acerca`
 
-La tarea debe cumplir con estos puntos:
-
-1. Mantener funcionando la ruta principal `/`.
-2. Crear una ruta `/acerca` en `app.py`.
-3. Crear una ruta `/contacto` en `app.py`.
-4. Crear una plantilla `templates/acerca.html`.
-5. Crear una plantilla `templates/contacto.html`.
-6. Agregar enlaces de navegacion para moverse entre Inicio, Acerca y Contacto.
-7. Verificar cada pagina desde el navegador.
-
-## Foco tecnico
-
-En Flask, una ruta conecta una URL con una funcion de Python.
-
-Por ejemplo:
+En `app.py`, agrega:
 
 ```python
 @app.route("/acerca")
@@ -42,34 +27,73 @@ def acerca():
     return render_template("acerca.html")
 ```
 
-Ese codigo significa:
+### Paso 3: Crear la ruta `/contacto`
 
-1. Cuando el navegador pide `/acerca`, Flask ejecuta la funcion `acerca()`.
-2. La funcion devuelve una plantilla HTML.
-3. Flask busca esa plantilla dentro de la carpeta `templates`.
-4. El navegador muestra el resultado.
+En `app.py`, agrega:
 
-No memorices el decorador. Entende el recorrido. La programacion web se aprende entendiendo el flujo, no copiando bloques sueltos.
+```python
+@app.route("/contacto")
+def contacto():
+    return render_template("contacto.html")
+```
+
+### Paso 4: Crear las plantillas nuevas
+
+Crea dos archivos:
+
+1. `templates/acerca.html`
+2. `templates/contacto.html`
+
+Cada archivo debe tener estructura HTML basica y un titulo visible (`<h1>`) para distinguir la pagina.
+
+### Paso 5: Agregar navegacion entre paginas
+
+En `index.html`, `acerca.html` y `contacto.html`, agrega enlaces:
+
+```html
+<a href="/">Inicio</a>
+<a href="/acerca">Acerca</a>
+<a href="/contacto">Contacto</a>
+```
+
+Ideal: que el bloque de navegacion este en las 3 paginas.
+
+### Paso 6: Verificar en navegador
+
+Abre manualmente estas URLs:
+
+1. `http://127.0.0.1:5000/`
+2. `http://127.0.0.1:5000/acerca`
+3. `http://127.0.0.1:5000/contacto`
+
+Luego navega solo con los links para comprobar que todo conecta.
+
+## Checklist de validacion
+
+1. `app.py` contiene `/`, `/acerca` y `/contacto`.
+2. Existen `index.html`, `acerca.html` y `contacto.html`.
+3. Las tres paginas cargan sin error.
+4. Hay navegacion entre las tres rutas.
+
+## Errores comunes (y como corregirlos)
+
+1. `TemplateNotFound`: la ruta existe, pero falta el archivo HTML.
+   Solucion: crea el archivo dentro de `templates/` con el nombre exacto.
+2. Error 404: existe el HTML, pero no la ruta en `app.py`.
+   Solucion: agrega el `@app.route(...)` y su funcion.
+3. Link mal escrito (por ejemplo `/contato`).
+   Solucion: revisa que `href` coincida exactamente con la ruta.
 
 ## Preguntas de reflexion tecnica
 
-1. Que relacion hay entre `/acerca`, la funcion `acerca()` y el archivo `acerca.html`?
-2. Que pasaria si la ruta existe en `app.py`, pero el archivo HTML no existe en `templates`?
-3. Que pasaria si el archivo HTML existe, pero no hay ninguna ruta que lo renderice?
-4. Por que conviene separar una pagina en su propia plantilla en lugar de poner todo en `index.html`?
-5. Que evidencia te da el navegador de que cada ruta esta funcionando?
+1. Que parte define la URL publica: el nombre de la funcion o `@app.route(...)`?
+2. Si cambias el nombre de la funcion, que debe mantenerse para no romper la URL?
+3. Por que separar cada seccion en su propia plantilla mejora el proyecto?
 
 ## Entregable
 
-Para dar la tarea por completa, se debe entregar:
-
-1. `app.py` con las rutas `/`, `/acerca` y `/contacto`.
-2. Las plantillas `index.html`, `acerca.html` y `contacto.html` funcionando.
-3. Navegacion entre las tres paginas.
-4. Una explicacion corta del flujo de una ruta completa, por ejemplo: `/contacto -> contacto() -> contacto.html`.
-
-## Cierre
-
-Ahora el proyecto ya no es una pagina suelta. Empieza a comportarse como una aplicacion web real: varias URL, varias funciones y varias vistas conectadas por una misma idea.
-
-Ese es el salto importante de esta tarea.
+1. `app.py` actualizado con las 3 rutas.
+2. `templates/acerca.html` y `templates/contacto.html` creados.
+3. Navegacion funcional entre las tres paginas.
+4. Explicacion corta de un flujo completo, por ejemplo:
+   `/contacto -> contacto() -> render_template("contacto.html") -> navegador`.
