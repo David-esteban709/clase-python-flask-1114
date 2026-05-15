@@ -13,6 +13,57 @@ app = Flask(__name__)
 def inicio():
     # `render_template` busca archivos dentro de la carpeta `templates`.
     return render_template("index.html")
+
+
+
+@app.route("/hola")
+def hola():
+    # `render_template` busca archivos dentro de la carpeta `templates`.
+    return render_template("hola.html")
+
+
+
+
+@app.route("/como")
+def como():
+    # `render_template` busca archivos dentro de la carpeta `templates`.
+    return render_template("como.html")
+
+
+
+
+@app.route("/bien")
+def bien():
+    # `render_template` busca archivos dentro de la carpeta `templates`.
+    return render_template("bien.html")
+
+
+
+
+@app.route("/acerca")
+def acerca():
+    return render_template("acerca.html")
+
+
+
+@app.route("/contacto")
+def contacto():
+    return render_template("contacto.html")
+
+
+
+@app.route("/recursos")
+def recursos():
+    
+    recursos = [
+    "Entorno virtual",
+    "Rutas en Flask",
+    "Plantillas HTML",
+    "Variables con Jinja"]
+
+    return render_template("recursos.html"
+                           ,recursos=recursos)
+
 # Este bloque se ejecuta solo si corremos `python app.py` desde la terminal.
 if __name__ == "__main__":
     # `debug=True` sirve en desarrollo porque reinicia el servidor
